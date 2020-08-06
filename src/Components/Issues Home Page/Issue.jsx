@@ -1,5 +1,6 @@
 import React from 'react';
 import { UserDetails, IssueNumber, TimeAgo, IssueStatus, IssueTitle, IssueLabels } from '../- Joint components -/AllJointComponents';
+import { Link } from 'react-router-dom';
 //import './Styles/Issue.css'
 
 export function Issue({ issue }) {
@@ -33,9 +34,10 @@ export function Issue({ issue }) {
                     }
                 </div>
                 <div className='issue_wrap_down'>
-                    
+                    <Link to={{pathname: `/issue_${number}`}}
+                          className='link'>
                         <IssueTitle title={title} />
-                    
+                    </Link>     
                     <IssueLabels labels={labels} />
                 </div>
             </div>
