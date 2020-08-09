@@ -13,10 +13,10 @@ export function FakeIssuesList() {
 
     return (
         <section className='issues-list'>
-            <h2>Open issues for: CURRENT ISSUES</h2>
-            <ul>
+            <h2>  open issues for :org/:repo </h2>
+            <ol>
                 {fakeList}
-            </ul>
+            </ol>
         </section>
     );
 }

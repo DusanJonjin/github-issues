@@ -1,4 +1,5 @@
 import React from 'react';
+import './Styles/IssueLabels.css'
 
 export function IssueLabels({ labels }) {
 

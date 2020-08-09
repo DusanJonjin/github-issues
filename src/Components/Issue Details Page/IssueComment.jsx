@@ -1,6 +1,7 @@
 import React from 'react';
 import { UserDetails, TimeAgo } from '../- Joint components -/AllJointComponents';
 import ReactMarkdown from 'react-markdown';
+import './Styles/IssueComment.css';
 
 export function IssueComment({ comment }) {
 
@@ -17,7 +18,7 @@ export function IssueComment({ comment }) {
                 </div>
                 <div>
                     <ReactMarkdown source={body} 
-                                   className='markdown' />
+                                   className={`markdown ${!body && 'fake_comment'}`} />
                 </div>
             </div>
         </div>

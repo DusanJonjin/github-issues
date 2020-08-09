@@ -1,0 +1,40 @@
+.issues-list {
+    width: 1000px;
+    margin: 0 auto;
+    max-width: 100%;
+    padding: 20px 0;
+}
+
+.issues-list > h2 {
+    text-align: center;
+    margin: 0;
+    font-family: 'Calibri', sans-serif;
+    font-size: 29px;
+    padding-bottom: 10px;
+    font-weight: 500;
+    color: rgb(88, 74, 74);
+}
+
+ol { 
+    padding: 0;
+    margin: 0;
+}
+
+ol li {
+    list-style: none;
+    border-top: 1px solid rgb(215, 215, 215);
+    border-left: 1px solid rgb(215, 215, 215);
+    border-right: 1px solid rgb(215, 215, 215);
+}
+
+.issues-list > p {
+    font-size: 21px;
+    color: rgb(63, 63, 63);
+    line-height: 1.5em;
+    text-align: center;
+    margin: 10px 10px;
+}
+
+ol li:last-child {
+    border-bottom: 1px solid rgb(215, 215, 215);
+}

@@ -1,9 +1,9 @@
 import React from 'react';
 import { UserDetails, IssueNumber, TimeAgo, IssueStatus, IssueTitle, IssueLabels } from '../- Joint components -/AllJointComponents';
 import { Link } from 'react-router-dom';
-//import './Styles/Issue.css'
+import './Styles/Issue.css'
 
-export function Issue({ issue }) {
+export function Issue({ issue, fullName, pageNum='1' }) {
 
     const {
         user,
@@ -14,6 +14,20 @@ export function Issue({ issue }) {
         title,
         labels
     } = issue;
+
+    const orgRepoArr = fullName.split('/');
+    const org = orgRepoArr[0];
+    const repo = orgRepoArr[1];
+
+    const issueLink = {
+        pathname: `/issue_${number}`, 
+        state: {
+            issueNumber: number,
+            pageNumber: pageNum,
+            org: org, 
+            repo: repo,
+        }
+    };
 
     return (
         <div className='issue_wrap_all'>
@@ -27,15 +41,14 @@ export function Issue({ issue }) {
                         <TimeAgo time={created_at} />
                     </div>
                     {comments > 0 &&
-                    <div className='issue_wrap_right'>
-                        <img src={require('../../Images/comment.png')} alt='comment_icon' />
-                        {comments}
-                    </div>
+                        <div className='issue_wrap_right'>
+                            <img src={require('../../Images/comment.png')} alt='comment_icon' />
+                            {comments}
+                        </div>
                     }
                 </div>
                 <div className='issue_wrap_down'>
-                    <Link to={{pathname: `/issue_${number}`}}
-                          className='link'>
+                    <Link to={issueLink} className='link'>
                         <IssueTitle title={title} />
                     </Link>     
                     <IssueLabels labels={labels} />

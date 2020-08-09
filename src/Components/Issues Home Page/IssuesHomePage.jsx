@@ -1,21 +1,23 @@
 import React, { useRef } from 'react';
 import { IssuesList } from './IssuesList';
-import  { FakeIssuesList } from './FakeIssuesList'
+import './Styles/IssuesHomePage.css';
 
-export function IssuesHomePage() {
+export function IssuesHomePage({ issues, fullName, openIssuesNum, handleSearchSubmit }) {
 
     const inputValue = useRef(null);
 
     return (
-        <main>
-            <form>
+        <main id='issues-home-page'>
+            <form onSubmit={e => handleSearchSubmit(e, inputValue.current.value)}>
                 <input type='search' 
                        placeholder='Enter :org/:repo (e.g., github/hub)'
                        ref={inputValue} />
                 <input type='submit' value='Search' />
             </form>
-            <FakeIssuesList /> 
-            <IssuesList />
+            <IssuesList issues={issues}
+                        fullName={fullName}
+                        openIssuesNum={openIssuesNum}
+            />
         </main>
     )
 }

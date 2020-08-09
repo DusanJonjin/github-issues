@@ -1,7 +1,7 @@
 import React from 'react';
 import { IssueTitle, IssueNumber, TimeAgo, IssueLabels, IssueStatus, UserDetails } from '../- Joint components -/AllJointComponents';
-
-export function IssueDetails({ issue }) {
+import './Styles/IssueDetails.css'
+export function IssueDetails({ chosenIssue }) {
 
     const {
         user,
@@ -10,7 +10,7 @@ export function IssueDetails({ issue }) {
         created_at,
         title,
         labels
-    } = issue;
+    } = chosenIssue;
 
     return (
         <section id='issue-details'>

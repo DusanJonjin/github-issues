@@ -1,29 +1,26 @@
 import React from 'react';
 import { Issue } from './Issue';
-import { Pagination } from './Pagination';
+import './Styles/IssuesList.css';
 
-export function IssuesList(issues) {
 
-    const issuesExist = Array.isArray(issues);
+export function IssuesList({ issues, fullName, openIssuesNum }) {
 
-    const allIssues = issuesExist && issues.map(issue => 
+
+    const allIssues = issues.map(issue => 
         <li key={issue.id}>
-            <Issue issue={issue} />
+            <Issue issue={issue}
+                   fullName={fullName} />
         </li>
     );
 
     return (
-        <section>
-            { issuesExist ?
+        <section className='issues-list'>      
             <React.Fragment>
-                <h2> open issues for</h2>
+                <h2> {openIssuesNum} open issues for {fullName} </h2>
                 <ol>
                     {allIssues}
-                </ol>
-                <Pagination />
-            </React.Fragment>          
-          : <p>No</p>
-            }
+                </ol>             
+            </React.Fragment>                    
         </section>
     )
 }
