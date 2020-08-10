@@ -1,4 +1,7 @@
 export const getAllData = async (org, repo, pageNum) => {
+
+    if (org === 'Invalid search') return {message: 'Invalid search query. Please enter the correct search format (:organisation/:repository) to find the issues!'};
+
     try {
         const getOrgRepo = await fetch(`https://api.github.com/repos/${org}/${repo}`);
         const orgRepo = await getOrgRepo.json();
@@ -38,6 +41,7 @@ export const getAllData = async (org, repo, pageNum) => {
         console.log('Error', err)
     }
 }
+
 
 export const getIssueComments = async commentsUrl => {
     const getComments = await fetch(commentsUrl);

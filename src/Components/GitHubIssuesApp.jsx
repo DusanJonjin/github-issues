@@ -33,10 +33,29 @@ export function GitHubIssuesApp() {
 
     const { issues, full_name, open_issues_count } = allData;
 
+    const handleSearchSubmit = (e, currentInputValue) => {
+        e.preventDefault();
+        const input = currentInputValue;
+        if (!input) return;
+        const slashArr = input.match(/\//g);
+        if (!slashArr || slashArr.length > 1 ) {
+            setOrgRepoValue({org:'Invalid search', repo:''})
+        }
+        else {
+            const orgRepo = input.split('/');
+            const org = orgRepo[0].toLowerCase();
+            const repo = orgRepo[1].toLowerCase();
+            setAllData({});
+            setOrgRepoValue({org: org, repo: repo});
+        }
+    }
 
     const handleBackHomeClick = () => {
-        setOrgRepoValue(homeOrgRepo);
-        setAllData({});
+        if (orgRepoValue !== homeOrgRepo) {
+            setAllData({});
+            setOrgRepoValue(homeOrgRepo);
+        }
+        else return;
     };
 
     useEffect(() => {
@@ -72,7 +91,9 @@ export function GitHubIssuesApp() {
                 <Route exact path='/'>
                     <IssuesHomePage issues={issues}
                                     fullName={full_name}
-                                    openIssuesNum={open_issues_count} />
+                                    openIssuesNum={open_issues_count}
+                                    handleSearchSubmit={handleSearchSubmit}
+                    />
                 </Route>
                 <Route path='/issue_:issueNum' >
                     <IssueDetailsPage issues={issues} />
