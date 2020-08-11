@@ -3,7 +3,7 @@ import { UserDetails, IssueNumber, TimeAgo, IssueStatus, IssueTitle, IssueLabels
 import { Link } from 'react-router-dom';
 import './Styles/Issue.css'
 
-export function Issue({ issue, fullName, pageNum='1' }) {
+export function Issue({ issue, fullName, pageNum }) {
 
     const {
         user,

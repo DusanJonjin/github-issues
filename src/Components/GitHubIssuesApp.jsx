@@ -5,6 +5,7 @@ import { IssueDetailsPage } from './Issue Details Page/IssueDetailsPage';
 import { FakeIssues } from '../Components/Issues Home Page/FakeIssues';
 import { getAllData } from '../Api/api';
 import { Switch, Route, useLocation, Link } from 'react-router-dom';
+import './GitHubIssuesApp.css';
 
 export function GitHubIssuesApp() {
 
@@ -14,24 +15,36 @@ export function GitHubIssuesApp() {
 
     const isHomeUrl = pathname === '/';
 
-    const homeOrgRepo = {org: 'facebook', repo: 'react'}
+    const homeOrgRepo = {org: 'facebook', repo: 'react'};
 
     //Set these values as default on first render or pages refresh:
     const urlOrgRepo = () => {
         if (isHomeUrl) return homeOrgRepo;
         if (!state) return {org:'', repo: ''};
-        const { issueNumber, pageNumber, url, ...orgRepo } = state;
+        const { issueNumber, pageNumber, ...orgRepo } = state;
         return orgRepo;
+    }
+
+    const urlPageNum = () => {
+        if (isHomeUrl) return 1;
+        if (!state) return 1;
+        return state.pageNumber;
     }
 
     const [orgRepoValue, setOrgRepoValue] = useState(urlOrgRepo());
 
     const { org , repo } = orgRepoValue;
+    
+
+    const [pageNum, setPageNum] = useState(urlPageNum());
+
+    const [itemsPerPage, setItemsPerPage] = useState(20);
 
 
     const [allData, setAllData] = useState({});
 
     const { issues, full_name, open_issues_count } = allData;
+    
 
     const handleSearchSubmit = (e, currentInputValue) => {
         e.preventDefault();
@@ -47,6 +60,7 @@ export function GitHubIssuesApp() {
             const repo = orgRepo[1].toLowerCase();
             setAllData({});
             setOrgRepoValue({org: org, repo: repo});
+            setPageNum(1);
         }
     }
 
@@ -58,20 +72,37 @@ export function GitHubIssuesApp() {
         else return;
     };
 
+    const handleSetPageNumber = num => {
+        setPageNum(num);
+        setAllData({});
+    };
+
+    const handleApiLimitReached = res => {
+        setAllData(res);
+    }
+
     useEffect(() => {
-        getAllData(org , repo, '1').then(res =>
+        getAllData(org , repo, pageNum, itemsPerPage).then(res =>
             setAllData(res),
             )
-    }, [org, repo]);
+    }, [org, repo, pageNum, itemsPerPage]);
 
     const allDataExists = Object.keys(allData).length > 2;
+
+    console.log(location)
 
     if (!allDataExists) {
         if (allData.message) return (
             <React.Fragment>
                 <Navbar />
-                <div>{allData.message}</div>
-                <Link to='/' onClick={handleBackHomeClick}>Back to home page</Link>
+                <div id='alldata_message'>
+                    <p>{allData.message}</p>
+                    <Link to='/' className='message_link'
+                        onClick={handleBackHomeClick}
+                    >
+                       &lt; Back to home page
+                    </Link>
+                </div>
             </React.Fragment>
         );
         else return (
@@ -79,7 +110,7 @@ export function GitHubIssuesApp() {
                 <Navbar />
                 {isHomeUrl ?
                     <FakeIssues />
-                  : <div>Loading Issue...</div>
+                  : <div id='loading_issue'><p>Loading Issue...</p></div>
                 }
             </React.Fragment>
         );    
@@ -92,11 +123,16 @@ export function GitHubIssuesApp() {
                     <IssuesHomePage issues={issues}
                                     fullName={full_name}
                                     openIssuesNum={open_issues_count}
+                                    pageNum={pageNum}
+                                    itemsPerPage={itemsPerPage}
                                     handleSearchSubmit={handleSearchSubmit}
+                                    handleSetPageNumber={handleSetPageNumber}
                     />
                 </Route>
                 <Route path='/issue_:issueNum' >
-                    <IssueDetailsPage issues={issues} />
+                    <IssueDetailsPage issues={issues}
+                                      handleApiLimitReached={handleApiLimitReached} 
+                    />
                 </Route>
             </Switch>
         </React.Fragment>

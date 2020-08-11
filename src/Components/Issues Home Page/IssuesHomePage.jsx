@@ -1,9 +1,19 @@
 import React, { useRef } from 'react';
 import { IssuesList } from './IssuesList';
+import { Pagination } from './Pagination';
 import './Styles/IssuesHomePage.css';
 
-export function IssuesHomePage({ issues, fullName, openIssuesNum, handleSearchSubmit }) {
+export function IssuesHomePage(props) {
 
+    const { issues, 
+            fullName, 
+            openIssuesNum, 
+            pageNum,
+            itemsPerPage, 
+            handleSearchSubmit, 
+            handleSetPageNumber 
+    } = props;
+     
     const inputValue = useRef(null);
 
     return (
@@ -17,6 +27,12 @@ export function IssuesHomePage({ issues, fullName, openIssuesNum, handleSearchSu
             <IssuesList issues={issues}
                         fullName={fullName}
                         openIssuesNum={openIssuesNum}
+                        pageNum={pageNum}
+            />
+            <Pagination openIssuesNum={openIssuesNum}
+                        pageNum={pageNum}
+                        itemsPerPage={itemsPerPage}
+                        handleSetPageNumber={handleSetPageNumber}
             />
         </main>
     )

@@ -11,13 +11,13 @@
     padding: 0;
 }
 
-.numbers {
+.pagin-numbers {
     font-family: 'Roboto', sans-serif;
     display: inline-block;
     font-size: 17px;
     color: rgb(120, 120, 120);
     background: rgb(222, 230, 253);
-    border: 1px solid rgb(204, 204, 204);
+    border: 1px solid rgb(189, 189, 189);
     width: 35px;
     height: 35px;
     /*To make element content be centered vertically: */
@@ -34,10 +34,10 @@
     pointer-events: none;
 }
 
-.numbers:hover {
+.pagin-numbers:hover {
     color: rgb(100, 100, 100);
     background: rgb(189, 203, 241);
-    border: 1px solid rgb(180, 180, 180);
+    border: 1px solid rgb(170, 170, 170);
 }
 
 .three-dots {

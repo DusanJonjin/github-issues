@@ -1,4 +1,4 @@
-export const getAllData = async (org, repo, pageNum) => {
+export const getAllData = async (org, repo, pageNum, itemsPerPage) => {
 
     if (org === 'Invalid search') return {message: 'Invalid search query. Please enter the correct search format (:organisation/:repository) to find the issues!'};
 
@@ -8,7 +8,7 @@ export const getAllData = async (org, repo, pageNum) => {
 
         if (orgRepo.message) return orgRepo;
 
-        const getIssues = await fetch(`https://api.github.com/repos/${org}/${repo}/issues?per_page=20&page=${pageNum}`);
+        const getIssues = await fetch(`https://api.github.com/repos/${org}/${repo}/issues?per_page=${itemsPerPage}&page=${pageNum}`);
         const issues = await getIssues.json();
 
         orgRepo.issues = issues;

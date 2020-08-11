@@ -6,7 +6,7 @@ import { getIssueComments } from '../../Api/api';
 import { Link, useLocation } from 'react-router-dom';
 import './Styles/IssueDetailsPage.css';
 
-export function IssueDetailsPage({ issues }) {
+export function IssueDetailsPage({ issues, handleApiLimitReached }) {
 
     const location = useLocation();
 
@@ -22,8 +22,12 @@ export function IssueDetailsPage({ issues }) {
 
     useEffect(() => {
         if (chosenIssue && commentsExist) {
-            getIssueComments(chosenIssue.comments_url).then(res => 
-                setIssueComments(res))
+            getIssueComments(chosenIssue.comments_url).then(res => {
+                /* check if incoming result is array, if it isn't - we've 
+                reached the api calls limit, and result is an object with message key */
+                if (Array.isArray(res)) setIssueComments(res);
+                else handleApiLimitReached(res);
+            })
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

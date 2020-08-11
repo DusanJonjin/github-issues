@@ -7,7 +7,7 @@
 
 .issues-list > h2 {
     text-align: center;
-    margin: 0;
+    margin: 0 10px;
     font-family: 'Calibri', sans-serif;
     font-size: 29px;
     padding-bottom: 10px;
@@ -15,16 +15,20 @@
     color: rgb(88, 74, 74);
 }
 
-ol { 
+.issues-list > ol { 
     padding: 0;
     margin: 0;
 }
 
-ol li {
+.issues-list > ol li {
     list-style: none;
     border-top: 1px solid rgb(215, 215, 215);
     border-left: 1px solid rgb(215, 215, 215);
     border-right: 1px solid rgb(215, 215, 215);
+}
+
+.issues-list > ol li:last-child {
+    border-bottom: 1px solid rgb(215, 215, 215);
 }
 
 .issues-list > p {
@@ -33,8 +37,4 @@ ol li {
     line-height: 1.5em;
     text-align: center;
     margin: 10px 10px;
-}
-
-ol li:last-child {
-    border-bottom: 1px solid rgb(215, 215, 215);
 }
