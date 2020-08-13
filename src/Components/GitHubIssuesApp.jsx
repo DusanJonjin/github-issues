@@ -20,7 +20,9 @@ export function GitHubIssuesApp() {
     //Set these values as default on first render or pages refresh:
     const urlOrgRepo = () => {
         if (isHomeUrl) return homeOrgRepo;
+    //if state is undefined or doesn't exist, something in the URL has been changed;
         if (!state) return {org:'', repo: ''};
+    //Otherwise the page is refreshed on /issue_(someNumber) Url, which has a state:
         const { issueNumber, pageNumber, ...orgRepo } = state;
         return orgRepo;
     }
@@ -50,7 +52,9 @@ export function GitHubIssuesApp() {
         e.preventDefault();
         const input = currentInputValue;
         if (!input) return;
+        //search input value has to contain one slash (/) (e.g: github/hub)
         const slashArr = input.match(/\//g);
+        //if it doesn't or it contains multiple slashes, then:
         if (!slashArr || slashArr.length > 1 ) {
             setOrgRepoValue({org:'Invalid search', repo:''})
         }
@@ -77,6 +81,12 @@ export function GitHubIssuesApp() {
         setAllData({});
     };
 
+    const handleItemsPerPage = num => {
+        setItemsPerPage(num);
+        setPageNum(1);
+        setAllData({});
+    }
+
     const handleApiLimitReached = res => {
         setAllData(res);
     }
@@ -87,9 +97,12 @@ export function GitHubIssuesApp() {
             )
     }, [org, repo, pageNum, itemsPerPage]);
 
-    const allDataExists = Object.keys(allData).length > 2;
+    //scroll to top when clicked on some other pageNum
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pageNum]);
 
-    console.log(location)
+    const allDataExists = Object.keys(allData).length > 2;
 
     if (!allDataExists) {
         if (allData.message) return (
@@ -97,11 +110,13 @@ export function GitHubIssuesApp() {
                 <Navbar />
                 <div id='alldata_message'>
                     <p>{allData.message}</p>
+                    {!allData.message.includes('API') &&
                     <Link to='/' className='message_link'
                         onClick={handleBackHomeClick}
                     >
                        &lt; Back to home page
                     </Link>
+                    }
                 </div>
             </React.Fragment>
         );
@@ -127,12 +142,13 @@ export function GitHubIssuesApp() {
                                     itemsPerPage={itemsPerPage}
                                     handleSearchSubmit={handleSearchSubmit}
                                     handleSetPageNumber={handleSetPageNumber}
+                                    handleItemsPerPage={handleItemsPerPage}
                     />
-                </Route>
+                </Route>       
                 <Route path='/issue_:issueNum' >
-                    <IssueDetailsPage issues={issues}
-                                      handleApiLimitReached={handleApiLimitReached} 
-                    />
+                        <IssueDetailsPage issues={issues}
+                                            handleApiLimitReached={handleApiLimitReached} 
+                        />
                 </Route>
             </Switch>
         </React.Fragment>

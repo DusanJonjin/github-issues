@@ -40,7 +40,6 @@ figcaption {
     align-items: center;
     padding: 0 0 10px 0;
     flex-wrap: wrap;
-    font-family: 'Calibri', sans-serif;
     color: rgb(85, 85, 85);
     font-weight: bold;
 }

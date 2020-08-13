@@ -11,7 +11,8 @@ export function IssuesHomePage(props) {
             pageNum,
             itemsPerPage, 
             handleSearchSubmit, 
-            handleSetPageNumber 
+            handleSetPageNumber,
+            handleItemsPerPage
     } = props;
      
     const inputValue = useRef(null);
@@ -28,6 +29,8 @@ export function IssuesHomePage(props) {
                         fullName={fullName}
                         openIssuesNum={openIssuesNum}
                         pageNum={pageNum}
+                        handleItemsPerPage={handleItemsPerPage}
+                        itemsPerPage={itemsPerPage}
             />
             <Pagination openIssuesNum={openIssuesNum}
                         pageNum={pageNum}

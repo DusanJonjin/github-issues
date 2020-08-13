@@ -3,6 +3,11 @@ import './Styles/Pagination.css'
 
 export function Pagination({ pageNum, itemsPerPage, openIssuesNum, handleSetPageNumber}) {
 
+    /*Because this component rerenders every time we press one of its number buttons, 
+    we need to implement logic to move buttons left or right depending on which pageNum
+    is recieved from props. This is why me make that its midPaginateBtnsArr state 
+    is directly depending on pageNum prop.*/
+
     const firstPageNum = 1;
 
     const lastPageNum = Math.ceil(openIssuesNum / itemsPerPage);
@@ -20,10 +25,9 @@ export function Pagination({ pageNum, itemsPerPage, openIssuesNum, handleSetPage
     const initialMidBtnsArr = () => {
         if (pageNum <= midBtnsTotal) return startMidBtnsArr;
         if (pageNum >= lastPageNum - (midBtnsTotal - 1)) return endMidBtnsArr;
-        const midBtnsArr = Array.from({length: midBtnsTotal}, (v, i) => {
-            if (midBtnsTotal <= 4) return i + (pageNum - 1);
-            else return i + (pageNum - 2);
-        });
+        const midBtnsArr = Array.from({length: midBtnsTotal}, (v, i) => 
+            midBtnsTotal <= 4 ? i + (pageNum - 1) : i + (pageNum - 2)
+        );
         return midBtnsArr;
     };
 
@@ -40,31 +44,6 @@ export function Pagination({ pageNum, itemsPerPage, openIssuesNum, handleSetPage
         setMidPaginateBtnsArr(endMidBtnsArr);
         return lastPageNum;
     };
-
-    /*const numOfPlacesToMove = midBtnsTotal % 2 === 0 ? 
-        midBtnsTotal / 2
-      : (midBtnsTotal - 1) / 2;
-
-    const movePaginBtnsForward = () => {
-        if (midPaginateBtnsArr[midBtnsTotal - 1] === lastPage - 1) return;
-        const increasePageBtnsNums = midPaginateBtnsArr.map(num => 
-            num + numOfPlacesToMove);
-        setMidPaginateBtnsArr(increasePageBtnsNums);
-    }
-
-    const movePaginBtnsBackwards = () => {
-        if (midPaginateBtnsArr[0] <= firstPage + 1) return;
-        const decreasePageBtnsNums = midPaginateBtnsArr.map(num => 
-            num - numOfPlacesToMove);
-        setMidPaginateBtnsArr(decreasePageBtnsNums);
-    }
-
-    const handlePaginateBtnsClick = (num, i) => {
-        if (num === pageNum) return;
-        else if (i === 0) movePaginBtnsBackwards();
-        else if (i === midBtnsTotal - 1) movePaginBtnsForward();
-        return num;
-    };*/
 
     const showThreeDots = {
         begin: midPaginateBtnsArr[0] !== 2,

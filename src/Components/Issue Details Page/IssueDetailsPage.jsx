@@ -21,6 +21,10 @@ export function IssueDetailsPage({ issues, handleApiLimitReached }) {
     const commentsExist = chosenIssue && chosenIssue.comments > 0;
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    useEffect(() => {
         if (chosenIssue && commentsExist) {
             getIssueComments(chosenIssue.comments_url).then(res => {
                 /* check if incoming result is array, if it isn't - we've 
@@ -37,12 +41,15 @@ export function IssueDetailsPage({ issues, handleApiLimitReached }) {
             <Link className='link' to={{pathname: '/'}}>
                     <p className='back'>&lsaquo; Back to all Issues</p>
             </Link>
-            <div id='issue-details-content-wrap'>
-                <IssueDetails chosenIssue={chosenIssue}/>
-                <IssueSummary body={chosenIssue.body}/>
-                <IssueComments commentsArray={issueComments}
-                               commentsNum={chosenIssue.comments} />
-            </div>
+            {chosenIssue ?
+                <div id='issue-details-content-wrap'>
+                    <IssueDetails chosenIssue={chosenIssue}/>
+                    <IssueSummary body={chosenIssue.body}/>
+                    <IssueComments commentsArray={issueComments}
+                                commentsNum={chosenIssue.comments} />
+                </div>
+            :   <p>Something went wrong. Go back to home page and restart the browser, to see all issues.</p>
+            }
         </main>
     )
 }

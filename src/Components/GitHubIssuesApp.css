@@ -14,10 +14,10 @@
 .message_link {
     outline: 0;
     text-decoration: none;
-    color: rgb(77, 77, 238);
+    color: rgb(68, 68, 241);
     font-size: 24px;
     font-weight: bold;
 }
 .message_link:hover {
-    color: rgb(53, 53, 238)
+    color: rgb(68, 68, 241);
 }

@@ -1,18 +1,31 @@
+
+const errorMsg = {
+    invalidSearch: {
+        message: 'Invalid search query. Please enter the correct search format (:organisation/:repository) to find the issues!'
+    },
+    noData: {
+        message: 'Something went wrong. Refresh the browser to try again.'
+    }
+};
+
 export const getAllData = async (org, repo, pageNum, itemsPerPage) => {
 
-    if (org === 'Invalid search') return {message: 'Invalid search query. Please enter the correct search format (:organisation/:repository) to find the issues!'};
+    if (org === 'Invalid search') return errorMsg.invalidSearch;
 
     try {
         const getOrgRepo = await fetch(`https://api.github.com/repos/${org}/${repo}`);
         const orgRepo = await getOrgRepo.json();
+
+        if (!orgRepo) return errorMsg.noData;
 
         if (orgRepo.message) return orgRepo;
 
         const getIssues = await fetch(`https://api.github.com/repos/${org}/${repo}/issues?per_page=${itemsPerPage}&page=${pageNum}`);
         const issues = await getIssues.json();
 
-        orgRepo.issues = issues;
+        if (!issues) return errorMsg.noData;
 
+        orgRepo.issues = issues;
         return orgRepo;
         
         /**** We map issues array and attach open issues count and
@@ -38,7 +51,7 @@ export const getAllData = async (org, repo, pageNum, itemsPerPage) => {
     }
 
     catch (err) {
-        console.log('Error', err)
+        return errorMsg.noData;
     }
 }
 
