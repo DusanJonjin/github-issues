@@ -117,3 +117,10 @@ figcaption {
     margin: 10px 0;
 }
 
+@media only screen and (max-width: 500px) {
+
+    .fake_up {
+        width: 150px;
+    }
+}
+

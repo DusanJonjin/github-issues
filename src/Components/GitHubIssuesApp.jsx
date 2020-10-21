@@ -147,7 +147,7 @@ export function GitHubIssuesApp() {
                 </Route>       
                 <Route path='/issue_:issueNum' >
                         <IssueDetailsPage issues={issues}
-                                            handleApiLimitReached={handleApiLimitReached} 
+                                          handleApiLimitReached={handleApiLimitReached} 
                         />
                 </Route>
             </Switch>

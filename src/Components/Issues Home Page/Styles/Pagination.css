@@ -18,6 +18,7 @@
     color: rgb(120, 120, 120);
     background: rgb(222, 230, 253);
     border: 1px solid rgb(189, 189, 189);
+    border-radius: 6px;
     width: 35px;
     height: 35px;
     /*To make element content be centered vertically: */
@@ -50,4 +51,17 @@
     text-align: center;
     cursor: context-menu;
     user-select: none;
+}
+
+@media only screen and (max-width: 500px) {
+    .pagin-numbers {
+        font-size: 16px;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+    }
+
+    .three-dots {
+        width: 25px
+    }
 }
